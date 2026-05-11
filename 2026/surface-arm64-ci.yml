@@ -1,0 +1,32 @@
+# Surface Laptop 7 arm64 mkosi profile validation
+# Saved to 2026/ per yubi-OS convention (no workflow scope required).
+# Jenny: copy to .github/workflows/ to activate.
+name: surface-arm64 mkosi validation
+
+on:
+  push:
+    branches: [feature/surface-arm64-snapdragon, feature/surface-arm64-audio]
+    paths: ['mkosi.profiles/surface-arm64/**']
+  pull_request:
+    branches: [main]
+    paths: ['mkosi.profiles/surface-arm64/**']
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+
+      - name: Install mkosi
+        run: |
+          pip install mkosi
+
+      - name: Validate surface-arm64 profile config
+        run: |
+          mkosi --profile surface-arm64 summary
+
+      - name: Shellcheck mkosi.extra scripts
+        run: |
+          find mkosi.profiles/surface-arm64 -name '*.sh' | \
+            xargs shellcheck --severity=warning
