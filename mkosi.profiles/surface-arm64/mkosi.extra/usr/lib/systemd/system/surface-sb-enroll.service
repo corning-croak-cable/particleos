@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# Secure Boot enrollment helper - Surface Laptop 7 / Snapdragon X Elite
+#
+# Runs once on first boot. Generates sbctl keys, signs UKIs, writes
+# enrollment instructions. No MokManager - Surface NX Mode firmware
+# freezes when MokManager loads. UKI + systemd-boot needs no shim.
+# Source: https://github.com/linux-surface/linux-surface/issues/1590
+
+[Unit]
+Description=Surface Secure Boot Key Enrollment (First Boot)
+After=local-fs.target
+ConditionFirstBoot=yes
+ConditionPathExists=!/var/lib/sbctl/guid
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/lib/surface/sb-enroll.sh
+
+[Install]
+WantedBy=first-boot-complete.target

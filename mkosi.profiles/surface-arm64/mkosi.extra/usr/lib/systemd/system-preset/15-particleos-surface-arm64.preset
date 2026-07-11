@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+enable qrtr-ns.service
+enable pd-mapper.service
+enable surface-sb-enroll.service
