@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# Qualcomm Protection Domain Mapper
+# Needed for WiFi (ath12k) and audio DSP firmware bring-up.
+# Source: https://github.com/andersson/pd-mapper
+
+[Unit]
+Description=Qualcomm Protection Domain Mapper
+After=qrtr-ns.service
+Requires=qrtr-ns.service
+
+[Service]
+Type=simple
+ExecStart=/usr/libexec/pd-mapper
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
